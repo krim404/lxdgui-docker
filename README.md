@@ -1,3 +1,7 @@
+# SOURCE
+Based on https://github.com/dobin/lxd-webgui  
+this is just a github for the base of the docker image https://hub.docker.com/r/wmchris/lxdgui/  
+
 # Description
 
 A lightweight web management web interface for LXD.
