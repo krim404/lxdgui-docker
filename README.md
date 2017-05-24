@@ -24,7 +24,7 @@ Works best in Chrome. Works in Firefox. Safari is currently not supported.
 
 The installation procedure is as follows:
 - Install LXD (if not already happened)
-- Install LXD-WEBGUI
+- Install LXD-WEBGUI Docker image
 - Create a client certificate and install it into the browser, and lxd
 - Configure lxd to listen to localhost/network
 
@@ -48,49 +48,13 @@ LXD has been successfully configured.
 ```
 
 ## Install LXD-WEBGUI
-
-### Prerequisites
-
-Install npm, bower and a simple http server:
-```
-$ sudo apt-get install npm
-$ sudo npm install -g bower
-$ sudo npm install -g http-server
-```
-
-### checkout LXD-WEBGUI
+pull the latest docker image
 
 ```
-$ git clone https://github.com/dobin/lxd-webgui.git
-$ cd lxd-webgui
+docker create --name lxdgui -p 443:443 wmchris/lxdgui
 ```
 
-
-### Dependencies
-
-install web dependencies for lxc-gui:
-```
-lxd-webgui$ bower install
-```
-
-### HTTP server
-
-create certs for the http server:
-```
-lxd-webgui$ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 365 -nodes
-```
-
-
-start http server to serve lxd-webgui:
-```
-lxd-webgui$ http-server -S -a localhost -p 8000
-```
-
-Of course you can just put the file to be served via Apache (/var/www) or any other web server.
-They are just static files.
-
-## lxd configuration
-
+## LXD Configuration
 ### certs
 
 Create a self-signed cert to authenticate to LXD:
@@ -126,12 +90,12 @@ Most importantly, we have the add the above client certificate
 $ sudo lxc config trust add cert.pem
 ```
 
-Configure LXD to listen to localhost on port 9000, and allow access from localhost port 8000 (where LXD-WEBGUI lives). We also have to configure LXD to accept the PUT, DELETE and OPTIONS HTTP headers, and fix allowed headers to  include "Content-Type".
+Configure LXD to listen to localhost on port 9000, and allow access from localhost port 443 (where LXD-WEBGUI lives). We also have to configure LXD to accept the PUT, DELETE and OPTIONS HTTP headers, and fix allowed headers to  include "Content-Type".
 Afterwards, we NEED to restart it atm.
 
 ```
 $ sudo lxc config set core.https_address 127.0.0.1:9000
-$ sudo lxc config set core.https_allowed_origin https://localhost:8000
+$ sudo lxc config set core.https_allowed_origin https://localhost:443
 $ sudo lxc config set core.https_allowed_methods "GET, POST, PUT, DELETE, OPTIONS"
 $ sudo lxc config set core.https_allowed_headers "Origin, X-Requested-With, Content-Type, Accept"
 $ sudo lxc config set core.https_allowed_credentials "true"
@@ -161,7 +125,7 @@ try to access lxd API: https://localhost:9000
 (and accept the certificate warning)
 
 
-access LXD-WEBGUI: https://localhost:8000
+access LXD-WEBGUI: https://localhost:443
 
 
 # FAQ
