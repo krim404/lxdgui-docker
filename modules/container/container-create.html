@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col-md-12">
+      <form name="userForm" ng-submit="createContainer(userForm.$valid)" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+
+      <div class="row">
+        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && (!userForm.name.$pristine || isSubmitted )}">
+
+          <div class="col-md-2">
+            <label> Name </label>
+          </div>
+
+          <div class="col-md-4">
+            <input ng-model="containerName"
+            class="form-control"
+            type="text"
+            value="{{containerName}}"
+            size="32"
+            ng-minlength="3"
+            ng-maxlength="64"
+            name="containerName"
+            required>
+          </div>
+
+          <div class="col-md-4">
+            <p ng-show="userForm.containerName.$invalid && (!userForm.containerName.$pristine || isSubmitted)" class="help-block">Name is required.</p>
+            64 chars max, ASCII, no slash, no colon and no comma
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && (!userForm.name.$pristine || isSubmitted )}">
+
+          <div class="col-md-2">
+            <label>Image </label>
+          </div>
+
+          <div class="col-md-4">
+            <ui-select name="image" ng-model="selected.image" required>
+                <ui-select-match>
+                    <span ng-bind="$select.selected.properties.description"></span>
+                </ui-select-match>
+
+                <ui-select-choices repeat="image in (images | filter: $select.search)">
+                    {{image.aliases[0].name}}
+                    <span ng-bind="image.properties.description"></span>
+                </ui-select-choices>
+            </ui-select>
+
+          </div>
+
+          <div class="col-md-4">
+            <p ng-show="userForm.image.$invalid && (!userForm.image.$pristine || isSubmitted)" class="help-block">Image is required.</p>
+            Base image
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && (!userForm.name.$pristine || isSubmitted )}">
+
+          <div class="col-md-2">
+            <label>Profile(s)</label>
+          </div>
+
+          <div class="col-md-4">
+            <ui-select multiple sortable="true" ng-model="selected.profile" required class="form-control">
+                <ui-select-match>
+                  {{$item.name}}
+                </ui-select-match>
+
+                <ui-select-choices repeat="profile in profiles | filter: $select.search">
+                  <span ng-bind-html="profile.name | highlight: $select.search"></span>
+                </ui-select-choices>
+            </ui-select>
+          </div>
+
+          <div class="col-md-4">
+            Base configuration profile
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && (!userForm.name.$pristine || isSubmitted )}">
+
+          <div class="col-md-2">
+            <label> Ephemeral</label>
+          </div>
+
+          <div class="col-md-4">
+            <label><input type="checkbox" ng-model="selected.ephemeral"></label>
+
+          </div>
+
+          <div class="col-md-4">
+            Whether to destroy the container on shutdown
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="row">
+        <button type="submit" class="btn btn-primary">
+          <i class="glyphicon glyphicon-plus"> Add Container</i>
+        </button>
+      </div>
+
+      </form>
+    </div>
+</div>

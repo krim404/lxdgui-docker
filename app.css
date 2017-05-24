@@ -1,0 +1,24 @@
+/* app css stylesheet */
+
+body{
+    margin-top:60px;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.bottomline {
+    padding-top: 7px;
+    padding-bottom: 7px;
+
+    border-bottom: 1px solid #ccc;
+}
+
+.bottomlinephat {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 7px;
+}
+
+.divider-vertical {
+    margin: 0 9px;
+    border-left: 1px solid #C3C3C3;
+}

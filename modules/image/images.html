@@ -1,0 +1,55 @@
+<div class="row">
+
+    <div class="col-md-12" ng-show="images.length > 0">
+
+        <table class="table table-condensed">
+            <thead>
+            <th>Hash</th>
+            <th>Alias</th>
+            <th>Description</th>
+            <th>OS </th>
+            <th>Size</th>
+            <th>Action</th>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="image in images">
+                    <td>
+                        <b>{{image.fingerprint | limitTo:12}}</b>
+                    </td>
+
+                    <td>
+                        <div class="" ng-repeat="alias in image.aliases">
+                            {{alias.name}}
+                        </div>
+                    </td>
+
+                    <td>
+                      {{image.properties.description}}
+                    </td>
+
+                    <td>
+                      {{image.properties.os}} {{image.properties.release}} {{image.properties.version}}
+                    </td>
+
+                    <td> {{image.size}}</td>
+
+                    <td>
+                        <a class="btn btn-sm btn-primary" href="#/image-view/{{image.fingerprint}}">
+                          <i class="glyphicon glyphicon-zoom-in"></i>View</a>
+
+                        <a class="btn btn-sm btn-danger" ng-click="delete(image)"><i
+                                class="glyphicon glyphicon-remove"></i> Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-12" ng-show="images.length == 0">
+        <div class="col-md-12">
+            <h4>No images available</h4>
+
+        </div>
+    </div>
+</div>
